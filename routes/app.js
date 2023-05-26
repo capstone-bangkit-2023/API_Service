@@ -1,10 +1,10 @@
 import express from 'express'
 import { register, login, forgotPassword, resetPassword } from '../controllers/user.js'
 import { runValidation, validationRegister } from '../utils/validation.js'
-import { createMataPelajaran, showMataPelajaran, deleteMataPelajaran, editMataPelajaran } from "../controllers/mata_pelajaran"
+import { createMataPelajaran, showMataPelajaran, deleteMataPelajaran, editMataPelajaran } from "../controllers/mata_pelajaran.js"
 import { createNilai, showNilai, deleteNilai, editNilai } from '../controllers/nilai.js'
 import { createSoal, showSoal, deleteSoal, editSoal } from '../controllers/soal.js'
-import { authenticateToken } from "../middleware/authentication"
+import { authenticateToken } from "../middleware/authentication.js"
 
 const ayoPintar = express.Router()
 

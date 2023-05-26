@@ -10,11 +10,11 @@ database()
 const app = express()
 const PORT = process.env.PORT || 5000
 
-// try {
-//     await User.sync({ force: true })
-// } catch (error) {
-//     console.log(`error : ${error.message}`)
-// }
+try {
+    await User.sync({ force: true })
+} catch (error) {
+    console.log(`error : ${error.message}`)
+}
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())

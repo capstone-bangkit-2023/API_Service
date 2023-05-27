@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 
-export const kirimEmail = dataEmail => {
+export const kirimEmail = async dataEmail => {
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,

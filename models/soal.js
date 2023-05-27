@@ -4,12 +4,12 @@ import Mata_Pelajaran from "./mata_pelajaran.js";
 const { DataTypes } = Sequelize
 
 const Soal = db.define('soal', {
-    id_soal: {
-        type: DataTypes.INTEGER,
+    kode_soal: {
+        type: DataTypes.STRING,
         required: true,
         unique: true
     },
-    mata_pelajaran: {
+    kode_matapelajaran: {
         type: DataTypes.STRING,
         required: true,
         FOREIGNKEYS: true,

@@ -55,18 +55,11 @@ export const forgotPassword = async(req,res) => {
         const { email } = req.body
         
         const user = await User.findOne({ where: { email } })
-        if(!user){
-            return res.status(200).json({
-                status: false,
-                message: 'Email tidak tersedia'
-            })
-        }
+        if (!user) return utilMessage(res, 404, 'Email tidak tersedia')
         
         const token = jwt.sign({
-            iduser: user._id
+            username: user.dataValues.username
         }, process.env.PRIVATE_KEY)
-        
-        await User.update({ resetPasswordLink: token }, { where: { email } })
   
         const templateEmail = {
             from: 'Ayo Pintar',
@@ -75,7 +68,7 @@ export const forgotPassword = async(req,res) => {
             html: `<p>Silahkan klik link dibawah untuk reset password </p> <p>${process.env.CLIENT_URL}/resetpassword/${token}</p>`
         }
 
-        kirimEmail(templateEmail)
+        await kirimEmail(templateEmail)
 
         return res.status(200).json({
             status: true,
@@ -87,10 +80,14 @@ export const forgotPassword = async(req,res) => {
 }
 
 export const resetPassword = async(req,res) => {
-    const {token, password} = req.body
-
-    const user = await User.findOne({resetPasswordLink: token})
+    const { password} = req.body
+    const { token } = req.params
     
+    const user = jwt.verify(token, process.env.PRIVATE_KEY, (error, decoded) => {
+        if (error) return utilMessage(res, 401, 'Token expired')
+        return decoded.userUsername
+    })
+
     if(user){
         const saltRound = Number(process.env.SALT_ROUND) || 10
         const hashPassword = await bcrypt.hash(password, saltRound)
@@ -101,4 +98,24 @@ export const resetPassword = async(req,res) => {
             message: 'Password berhasil diganti'
         })
      }
+}
+
+export const changePassword = async(req, res) => {
+    try {
+        const { oldPassword, newPassword, confirmNewPassword } = req.body
+        const username = req.username
+        if (newPassword !== confirmNewPassword) return utilMessage(res, 400, 'Password dan Confirm Password tidak sesuai')
+        const user = await User.findOne({ where: { username } })
+        if (!user) return utilMessage(res, 400, 'User tidak ditemukan')
+        const userPassword = await user.dataValues.password
+        const matchPassword = await bcrypt.compare(oldPassword, userPassword)
+        if (!matchPassword) return utilMessage(res, 400, 'Password salah')
+        const saltRound = Number(process.env.SALT_ROUND) || 10
+        const hashPassword = await bcrypt.hash(newPassword, saltRound)
+        const updatedUser = await User.update({ password: hashPassword }, { where: { username } })
+        if (updatedUser.length === 0) return utilMessage(res, 400, 'Password gagal diubah')
+        return utilMessage(res, 200, 'Password berhasil diubah')
+    } catch (error) {
+        return utilError(res, error)
+    }
 }

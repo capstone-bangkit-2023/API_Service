@@ -1,5 +1,6 @@
 import Mata_Pelajaran from '../models/mata_pelajaran.js'
 import { utilMessage, utilError } from '../utils/message.js'
+import { v4 as uuidv4 } from 'uuid';
 
 export const createMataPelajaran = async(req, res) => {
     try {
@@ -7,7 +8,8 @@ export const createMataPelajaran = async(req, res) => {
             mata_pelajaran,
             kelas,
         } = req.body
-        const postmataPelajaran = await Mata_Pelajaran.create({ id_matapelajaran: null, mata_pelajaran, kelas })
+        const kode_matapelajaran = uuidv4()
+        const postmataPelajaran = await Mata_Pelajaran.create({ kode_matapelajaran, mata_pelajaran, kelas })
         if (postmataPelajaran) return utilMessage(res, 200, 'Post Mata Pelajaran berhasil')
         return utilMessage(res, 403, 'Post mata pelajaran gagal')
     }catch (error) {

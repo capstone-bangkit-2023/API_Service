@@ -5,8 +5,8 @@ import User from "./user.js";
 const { DataTypes } = Sequelize
 
 const Nilai = db.define('nilai', {
-    id_nilai: {
-        type: DataTypes.INTEGER,
+    kode_nilai: {
+        type: DataTypes.STRING,
         required: true,
         unique: true
     },

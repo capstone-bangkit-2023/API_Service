@@ -13,6 +13,10 @@ const Mata_Pelajaran = db.define('mata_pelajaran', {
         required: true,
         unique: true,
     },
+    link_foto: {
+        type: DataTypes.STRING,
+        required: false,
+    },
 }, {
     freezeTableName: true
 })

@@ -23,7 +23,7 @@ const Nilai = db.define('nilai', {
         references: User.username
     },
     nilai: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         required: true,
     },
 }, {

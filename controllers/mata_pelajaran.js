@@ -6,10 +6,10 @@ export const createMataPelajaran = async(req, res) => {
     try {
         const {
             mata_pelajaran,
-            kelas,
+            link_foto
         } = req.body
         const kode_matapelajaran = uuidv4()
-        const postmataPelajaran = await Mata_Pelajaran.create({ kode_matapelajaran, mata_pelajaran, kelas })
+        const postmataPelajaran = await Mata_Pelajaran.create({ kode_matapelajaran, mata_pelajaran, link_foto })
         if (postmataPelajaran) return utilMessage(res, 200, 'Post Mata Pelajaran berhasil')
         return utilMessage(res, 403, 'Post mata pelajaran gagal')
     }catch (error) {

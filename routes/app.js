@@ -2,9 +2,9 @@ import express from 'express'
 import { register, login, forgotPassword, resetPassword, changePassword } from '../controllers/user.js'
 import { runValidation, validationRegister } from '../utils/validation.js'
 import { createMataPelajaran, showMataPelajaran, deleteMataPelajaran, editMataPelajaran } from "../controllers/mata_pelajaran.js"
-import { createNilai, showNilai, deleteNilai, editNilai } from '../controllers/nilai.js'
+import { createNilai, showNilai, deleteNilai, editNilai, showTertinggi, showTerendah, showAll, showHistory } from '../controllers/nilai.js'
 import { createSoal, showSoal, deleteSoal, editSoal } from '../controllers/soal.js'
-import { authenticateToken } from "../middleware/authentication.js"
+import { authenticateToken } from '../controllers/verification.js'
 
 const ayoPintar = express.Router()
 
@@ -23,6 +23,10 @@ ayoPintar.get('/nilai', authenticateToken, showNilai)
 ayoPintar.post('/nilai', authenticateToken, createNilai)
 ayoPintar.delete('/nilai', authenticateToken, deleteNilai)
 ayoPintar.put('/nilai', authenticateToken, editNilai)
+ayoPintar.get('/nilaiTertinggi', authenticateToken, showTertinggi)
+ayoPintar.get('/nilaiTerendah', authenticateToken, showTerendah)
+ayoPintar.get('/allNilai', authenticateToken, showAll)
+ayoPintar.get('/historyNilai', authenticateToken, showHistory)
 
 ayoPintar.get('/soal', authenticateToken, showSoal)
 ayoPintar.post('/soal', authenticateToken, createSoal)

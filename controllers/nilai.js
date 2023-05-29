@@ -60,7 +60,7 @@ export const showTertinggi = async(req, res) => {
             .then((results) => {
                 const nilaiTertinggi = results.map((result) => result.mata_pelajaran);
                 console.log(nilaiTertinggi);
-                return utilMessage(res, 200, nilaiTertinggi)
+                return utilData(res, 200, {nilaiTertinggi})
             })
             .catch((error) => {
                 return utilError(res, error)
@@ -86,7 +86,7 @@ export const showTertinggi = async(req, res) => {
               })
                 .then((results) => {
                     const nilaiTerendah = results.map((result) => result.mata_pelajaran);
-                    utilMessage(res, 200, nilaiTerendah)
+                    utilData(res, 200, {nilaiTerendah})
                 })
                 .catch((error) => {
                   return utilError(res, error)
@@ -117,19 +117,53 @@ export const showTertinggi = async(req, res) => {
             const {
             username
             } = req.body
-            const cekNilai = await Nilai.findAll({
-                where: {username},
-                attributes: ['mata_pelajaran'],
-                distinct: true,
+            const cekNilai = await 
+            //Nilai.findAll({
+            //     where: { username },
+            //     order: [['updatedAt', 'DESC']],
+            //     limit: 3
+            //   })
+            //     .then((results) => {
+            //       const dataTerbaru = results.map((result) => ({
+            //         mata_pelajaran: result.mata_pelajaran,
+            //         nilai: result.nilai,
+            //         tanggal: result.tanggal
+            //       }));
+              
+            //       console.log(`3 data terbaru untuk pengguna ${username}:`, dataTerbaru);
+            //     })
+            //     .catch((error) => {
+            //       console.error('Terjadi kesalahan:', error);
+            //     });
+            Nilai.findAll({
+                where: { username },
+                attributes: ['mata_pelajaran', 'nilai'],
                 order: [['updatedAt', 'DESC']],
-                limit: 3,
+                group: ['mata_pelajaran'],
               })
-                .then((results) => {
-                    const nilaiTerbaru = results.map((result) => result.nilai);
-                    return utilMessage(res, 200, nilaiTerbaru)
+              .then((results) => {
+                const nilaiTerbaruPerMapel = {};
+            
+                results.forEach((result) => {
+                  const mapel = result.mata_pelajaran;
+            
+                  if (!nilaiTerbaruPerMapel[mapel]) {
+                    nilaiTerbaruPerMapel[mapel] = [];
+                  }
+                  if (nilaiTerbaruPerMapel[mapel].length < 3) {
+                    console.log(result.nilai)
+                    nilaiTerbaruPerMapel[mapel].push(result.nilai);
+                  }
+                //   if (nilaiTerbaruPerMapel[mapel].length < 3) {
+                //     for(var i = 0; i < nilaiTerbaruPerMapel[mapel].length; i++){
+                //         nilaiTerbaruPerMapel[mapel].push(result.nilai)
+                //     }
+                //   }
+                });
+                return utilData(res,200, {nilaiTerbaruPerMapel})
                 })
                 .catch((error) => {
-                    return utilError(res, error)
+                  console.error('Terjadi kesalahan:', error);
                 });
             if (!cekNilai) return utilMessage(res,400, 'Nilai tidak ada')
         }catch (error) {

@@ -22,7 +22,11 @@ export const createSoal = async(req, res) => {
 
 export const showSoal = async(req, res) => {
     try {
+        const{
+            mata_pelajaran
+        } = req.params
         const soal = await Soal.findAll({
+            where: {kode_matapelajaran: mata_pelajaran},
             order: Sequelize.literal('RAND()'), // Menggunakan fungsi RAND() untuk pengurutan acak
             limit: 10, // Batasan jumlah soal yang diambil
           });

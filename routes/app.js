@@ -28,7 +28,7 @@ ayoPintar.get('/nilaiTerendah', authenticateToken, showTerendah)
 ayoPintar.get('/allNilai', authenticateToken, showAll)
 ayoPintar.get('/historyNilai', authenticateToken, showHistory)
 
-ayoPintar.get('/soal', authenticateToken, showSoal)
+ayoPintar.get('/soal/:mata_pelajaran', authenticateToken, showSoal)
 ayoPintar.post('/soal', authenticateToken, createSoal)
 ayoPintar.delete('/soal', authenticateToken, deleteSoal)
 ayoPintar.put('/soal', authenticateToken, editSoal)

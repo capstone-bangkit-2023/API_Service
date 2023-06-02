@@ -1,5 +1,5 @@
 import Mata_Pelajaran from '../models/mata_pelajaran.js'
-import { utilMessage, utilError } from '../utils/message.js'
+import { utilMessage, utilError, utilData } from '../utils/message.js'
 import { v4 as uuidv4 } from 'uuid';
 
 export const createMataPelajaran = async(req, res) => {
@@ -19,18 +19,9 @@ export const createMataPelajaran = async(req, res) => {
 
 export const showMataPelajaran = async(req, res) => {
     try {
-        const {
-        mata_pelajaran
-        } = req.body
-        const cekmataPelajaran = await Mata_Pelajaran.findOne({ where: { mata_pelajaran }})
-        if (!cekmataPelajaran) return utilMessage(res,400, 'mata pelajaran tidak ada')
-        if (cekmataPelajaran) return res.status(200).json({
-            status: true,
-            kelas: Mata_Pelajaran.kelas,
-            mata_pelajaran: Mata_Pelajaran.mata_pelajaran,
-            message: 'Mata pelajaran berhasil ditampilkan'
-        })
-        return utilMessage(res, 403, 'Mata Pelajaran gagal ditampilkan')
+        const cekmataPelajaran = await Mata_Pelajaran.findAll()
+        if (!cekmataPelajaran) return utilMessage(res,400, 'mata pelajaran gagal ditampilkan')
+        return utilData(res,200,cekmataPelajaran)
     }catch (error) {
         return utilError(res, error)
     }

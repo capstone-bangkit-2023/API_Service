@@ -43,7 +43,7 @@ export const login = async(req, res) => {
         const userPassword = dataUser.password
         const matchPassword = await bcrypt.compare(password, userPassword)
         if (!matchPassword) return utilMessage(res, 404, 'Username/password salah')
-        const accessToken = jwt.sign({ userUsername }, process.env.PRIVATE_KEY, { expiresIn: '3d' })
+        const accessToken = jwt.sign({ userUsername }, process.env.PRIVATE_KEY)
         return utilData(res, 200, { accessToken })
     } catch (error) {
         return utilError(res, error)
@@ -91,8 +91,8 @@ export const resetPassword = async(req,res) => {
     if(user){
         const saltRound = Number(process.env.SALT_ROUND) || 10
         const hashPassword = await bcrypt.hash(password, saltRound)
-        user.password = hashPassword
-        await user.save()
+        const updatedUser = await User.update({ password: hashPassword }, { where: { username: user } })
+        if (updatedUser.length === 0) return utilMessage(res, 400, 'Password gagal diubah')
         return res.status(200).json({
             status: true,
             message: 'Password berhasil diganti'

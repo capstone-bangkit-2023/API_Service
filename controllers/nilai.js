@@ -1,7 +1,7 @@
 import Nilai from '../models/nilai.js'
 import { utilMessage, utilError, utilData } from '../utils/message.js'
 import { v4 as uuidv4 } from 'uuid';
-import { Sequelize, QueryTypes } from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 export const createNilai = async(req, res) => {
     try {

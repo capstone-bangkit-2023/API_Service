@@ -17,9 +17,10 @@
 # # CMD ["python", "-u", "main.py"]
 
 # CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8080", "main:app"]
-FROM node:12-slim
-WORKDIR /usr/src/app
+FROM node:14
+WORKDIR /app
 COPY package.json package*.json ./
-RUN npm install --only=production
+RUN npm install 
 COPY . .
-CMD [ "npm", "run", "start" ]
+EXPOSE 8080
+CMD [ "npm", "start" ]

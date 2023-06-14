@@ -11,6 +11,7 @@ export const createSoal = async(req, res) => {
             jawaban,
             mata_pelajaran
         } = req.body
+        console.log(soal)
         const kode_soal = uuidv4()
         const postSoal = await Soal.create({ kode_soal, soal, jawaban, mata_pelajaran })
         if (postSoal) return utilMessage(res, 200, 'Post soal berhasil')
@@ -25,10 +26,10 @@ export const showSoal = async(req, res) => {
         const{
             mata_pelajaran
         } = req.params
-        const soal = await Soal.findAll({
+        const soal = await Soal.findOne({
             where: {mata_pelajaran: mata_pelajaran},
+            attributes: ['kode_soal','soal'],
             order: Sequelize.literal('RAND()'), // Menggunakan fungsi RAND() untuk pengurutan acak
-            limit: 10, // Batasan jumlah soal yang diambil
           });
         if (!soal) return utilMessage(res,400, 'Soal tidak ada')
         return utilData(res,200, {soal})

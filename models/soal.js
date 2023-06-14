@@ -13,7 +13,7 @@ const Soal = db.define('soal', {
         type: DataTypes.STRING,
         required: true,
         FOREIGNKEYS: true,
-        references: Mata_Pelajaran.mata_pelajaran
+        references: Mata_Pelajaran.kode_matapelajaran
     },
     soal: {
         type: DataTypes.TEXT,

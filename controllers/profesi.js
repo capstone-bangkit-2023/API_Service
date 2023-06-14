@@ -1,24 +1,25 @@
-import { utilMessage, utilError, utilData } from '../utils/message.js'
-import axios from 'axios'
-import Nilai from '../models/nilai.js'
-import jwt from "jsonwebtoken"
-import { Sequelize } from 'sequelize'
+import { utilMessage, utilError, utilData } from "../utils/message.js";
+import axios from "axios";
+import Nilai from "../models/nilai.js";
+import jwt from "jsonwebtoken";
+import { Sequelize } from "sequelize";
 
-export const getProfesi = async(req, res) => {
-    try {
-        const authHeader = req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]
-        if (token == null) return utilMessage(res, 401, 'Token invalid')
-        jwt.verify(token, process.env.PRIVATE_KEY, (error, decoded) => {
-            if (error) return utilMessage(res, 401, 'Token expired')
-            req.username = decoded.userUsername
-        })
-        const username = req.username
-        const cekNilai = await Nilai.findAll({
-            where: {username},
-            attributes: ['nilai'],
-            distinct: true,
-            order: [Sequelize.literal(`FIELD(mata_pelajaran,
+export const getProfesi = async (req, res) => {
+  try {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token == null) return utilMessage(res, 401, "Token invalid");
+    jwt.verify(token, process.env.PRIVATE_KEY, (error, decoded) => {
+      if (error) return utilMessage(res, 401, "Token expired");
+      req.username = decoded.userUsername;
+    });
+    const username = req.username;
+    const cekNilai = await Nilai.findAll({
+      where: { username },
+      attributes: ["nilai"],
+      distinct: true,
+      order: [
+        Sequelize.literal(`FIELD(mata_pelajaran,
                 'indonesia',
                 'biologi',
                 'kimia',
@@ -34,30 +35,23 @@ export const getProfesi = async(req, res) => {
                 'inggris',
                 'pai',
                 'penjas'
-            )`)
-        ],
-          });
-           const nilaiMapel = cekNilai.map((result) => result.nilai);
-           console.log(nilaiMapel)
-          const config = {
-            method: 'post',
-            url: 'https://api-model-t7eb73gi3q-et.a.run.app/',
-            headers: { 
-                    'Authorization': `Bearer ${token}`,
-                       'Content-Type': 'application/json'
-                     },
-            data: {
-                    data:nilaiMapel
-                }
-          }
-          axios(config)
-            .then((response) => {
-                return utilData(res, 200, response)
-            })
-            .catch((error) => {
-            return utilError(res, error)
-            });
-    } catch (error) {
-        return utilError(res, error)
-    }
+            )`),
+      ],
+    });
+    const nilaiMapel = cekNilai.map((result) => result.nilai);
+    const { data } = await axios.post(
+      "https://api-model-t7eb73gi3q-et.a.run.app/predict",
+      {
+        input: nilaiMapel,
+         },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return utilData(res, 200, data);
+  } catch (error) {
+    return utilError(res, error);
   }
+};

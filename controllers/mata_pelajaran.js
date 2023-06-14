@@ -6,7 +6,7 @@ export const createMataPelajaran = async(req, res) => {
     try {
         const {
             mata_pelajaran,
-            link_foto
+            link_foto = 'www.com'
         } = req.body
         const kode_matapelajaran = uuidv4()
         const postmataPelajaran = await Mata_Pelajaran.create({ kode_matapelajaran, mata_pelajaran, link_foto })

@@ -5,6 +5,8 @@ import { createMataPelajaran, showMataPelajaran, deleteMataPelajaran, editMataPe
 import { createNilai, showNilai, deleteNilai, editNilai, showTertinggi, showTerendah, showAll, showHistory } from '../controllers/nilai.js'
 import { createSoal, showSoal, deleteSoal, editSoal } from '../controllers/soal.js'
 import { authenticateToken } from '../controllers/verification.js'
+import { getProfesi } from '../controllers/profesi.js'
+import { getAnswer } from '../controllers/sentence.js'
 
 const ayoPintar = express.Router()
 
@@ -32,5 +34,8 @@ ayoPintar.get('/soal/:mata_pelajaran', authenticateToken, showSoal)
 ayoPintar.post('/soal', authenticateToken, createSoal)
 ayoPintar.delete('/soal', authenticateToken, deleteSoal)
 ayoPintar.put('/soal', authenticateToken, editSoal)
+
+ayoPintar.post('/profesi', getProfesi)
+ayoPintar.post('/sentence', getAnswer)
 
 export default ayoPintar

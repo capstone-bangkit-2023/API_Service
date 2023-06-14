@@ -9,10 +9,10 @@ export const createSoal = async(req, res) => {
         const {
             soal,
             jawaban,
-            kode_matapelajaran
+            mata_pelajaran
         } = req.body
         const kode_soal = uuidv4()
-        const postSoal = await Soal.create({ kode_soal, soal, jawaban, kode_matapelajaran })
+        const postSoal = await Soal.create({ kode_soal, soal, jawaban, mata_pelajaran })
         if (postSoal) return utilMessage(res, 200, 'Post soal berhasil')
         return utilMessage(res, 403, 'Post soal gagal')
     }catch (error) {
@@ -26,7 +26,7 @@ export const showSoal = async(req, res) => {
             mata_pelajaran
         } = req.params
         const soal = await Soal.findAll({
-            where: {kode_matapelajaran: mata_pelajaran},
+            where: {mata_pelajaran: mata_pelajaran},
             order: Sequelize.literal('RAND()'), // Menggunakan fungsi RAND() untuk pengurutan acak
             limit: 10, // Batasan jumlah soal yang diambil
           });
@@ -43,11 +43,11 @@ export const editSoal = async(req, res) => {
         const {
             soal,
             jawaban,
-            kode_matapelajaran
+            mata_pelajaran
         } = req.body
         const cekSoal = await Soal.findOne({ where: { soal }})
         if (!cekSoal) return utilMessage(res,400, 'Soal tidak ada')
-        const editSoal = await Soal.edit({soal: soal, jawaban: jawaban, kode_matapelajaran: kode_matapelajaran},{ where: { soal } })
+        const editSoal = await Soal.edit({soal: soal, jawaban: jawaban, mata_pelajaran: mata_pelajaran},{ where: { soal } })
         if (editSoal) return utilMessage(res, 200, 'Edit soal berhasil')
         return utilMessage(res, 403, 'Edit soal gagal')
     }catch (error) {

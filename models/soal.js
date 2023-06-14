@@ -9,7 +9,7 @@ const Soal = db.define('soal', {
         required: true,
         unique: true
     },
-    kode_matapelajaran: {
+    mata_pelajaran: {
         type: DataTypes.STRING,
         required: true,
         FOREIGNKEYS: true,

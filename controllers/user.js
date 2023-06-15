@@ -13,6 +13,7 @@ export const register = async(req, res) => {
             nama,
             namaSekolah = null, // optional
             email,
+            foto = 'https://th.bing.com/th/id/OIP.vvmpWt0qBu3LeBgZuUfmGAHaFt?pid=ImgDet&rs=1'
         } = req.body
         const dataUser = await User.findOne({ where: { username } })
         if (dataUser) return utilMessage(res, 400, 'Username sudah digunakan')
@@ -25,7 +26,6 @@ export const register = async(req, res) => {
         if (!matchPassword) return utilMessage(res, 400, 'Password dan Confirm password tidak sesuai')
         const saltRound = Number(process.env.SALT_ROUND) || 10
         const hashPassword = await bcrypt.hash(password, saltRound)
-        const foto = process.env.LINK_FOTO
         const postUser = await User.create({ username, password: hashPassword, nama, namaSekolah, foto, email })
         if (postUser) return utilMessage(res, 200, 'Registrasi berhasil')
         return utilMessage(res, 403, 'Registrasi gagal, Access ditolak')
@@ -33,7 +33,15 @@ export const register = async(req, res) => {
         return utilError(res, error)
     }
 }
-
+export const getProfile = async(req, res) => {
+    try {
+        const { username } = req.body
+        const dataUser = await User.findOne({ where: { username } })
+        return utilData(res, 200, dataUser)
+    } catch (error) {
+        return utilError(res, error)
+    }
+}
 export const login = async(req, res) => {
     try {
         const { username, password } = req.body

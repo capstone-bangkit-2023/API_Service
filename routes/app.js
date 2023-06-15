@@ -1,5 +1,5 @@
 import express from 'express'
-import { register, login, forgotPassword, resetPassword, changePassword } from '../controllers/user.js'
+import { register, login, forgotPassword, resetPassword, changePassword, getProfile } from '../controllers/user.js'
 import { runValidation, validationRegister } from '../utils/validation.js'
 import { createMataPelajaran, showMataPelajaran, deleteMataPelajaran, editMataPelajaran } from "../controllers/mata_pelajaran.js"
 import { createNilai, showNilai, deleteNilai, editNilai, showTertinggi, showTerendah, showAll, showHistory } from '../controllers/nilai.js'
@@ -13,6 +13,7 @@ const ayoPintar = express.Router()
 ayoPintar.post('/register', validationRegister, runValidation, register)
 ayoPintar.post('/login', login)
 ayoPintar.post('/forgotPassword', forgotPassword)
+ayoPintar.post('/profile', authenticateToken, getProfile)
 ayoPintar.put('/resetPassword/:token', resetPassword)
 ayoPintar.put('/changePassword/',authenticateToken, changePassword)
 

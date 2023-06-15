@@ -142,7 +142,7 @@ export const showTertinggi = async(req, res) => {
                 group: ['mata_pelajaran'],
               })
               .then((results) => {
-                const nilaiTerbaruPerMapel = {};
+                const nilaiTerbaruPerMapel = [];
             
                 results.forEach((result) => {
                   const mapel = result.mata_pelajaran;

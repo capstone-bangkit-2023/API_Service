@@ -16,12 +16,12 @@ const Soal = db.define('soal', {
         references: Mata_Pelajaran.kode_matapelajaran
     },
     soal: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         required: true,
         unique: true,
     },
     jawaban: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         required: true,
     },
 }, {

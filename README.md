@@ -40,6 +40,23 @@ gcloud run deploy --image gcr.io/$DEVSHELL_PROJECT_ID/api-service:0.1
 # Environment Setting
 For Reset Password, Enter your email and app-password in .env with this configuration:
   
+PORT = 5000
+  <br/>
+DATABASE_NAME = {ENTER YOUR DATABASE NAME}
+  <br/>
+DATABASE_HOST = {ENTER YOUR DATABASE HOST}
+  <br/>
+DATABASE_USERNAME = {ENTER YOUR DATABASE USERNAME}
+  <br/>
+DATABASE_PASSWORD = {ENTER YOUR DATABASE PASSWORD}
+  <br/><br/>
+
+PRIVATE_KEY = {ENTER YOUR PRIVATE KEY}
+  <br/>
+LINK_FOTO = {ENTER YOUR LINK PHOTO}
+  <br/>
+CLIENT_URL = {ENTER YOUR CLIENT URL}
+  <br/><br/>
 NODEMAILER = {ENTER YOUR EMAIL}
   <br/>
 NODEMAILER_PASS = {ENTER YOUR EMAIL APP-PASSWORD}

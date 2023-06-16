@@ -9,7 +9,7 @@
   <p align="center">
     Smart Quiz Platform
 
-# LoginRegisterAPI
+# API Service
 API Service there 2 functions, such as bridge mobile app with API Model and bridge mobile app with database. To specific it, mobile app will send request to login, register, serve question, serve point, etc. Then API will retrieve data from database.
 
 # API Documentation

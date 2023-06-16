@@ -41,28 +41,28 @@ export const getAnswer = async(req, res) => {
     const updatedNilai = Nilai.create({ nilai: result, kode_nilai, mata_pelajaran: dataJawaban.mata_pelajaran, username })
     if (!updatedNilai) return utilMessage(res, 400, 'Nilai gagal ditambahkan')
     return utilData(res, 200, result)
-    axios(config)
-      .then((response) => {
-        for (let i = 0; i < hasil.length; i++) {
-          const updatedNilai = Nilai.update({ nilai: response.data }, { where: { username, mata_pelajaran } })
-          if (!updatedNilai) return utilMessage(res, 400, 'Nilai gagal diunggah')
-          }
-            return utilData(res, 200, response.data)
-      })
-      .catch((error) => {
-      return utilError(res, error)
-      })
-    axios.post('https://api-model-sentences-t7eb73gi3q-et.a.run.app/', res.json(hasil))
-    .then((response) => {
-      for (let i = 0; i < response.length; i++) {
-      const updatedNilai = Nilai.save({ nilai: data.nilai }, { where: { username, mata_pelajaran: mata_pelajaran } })
-      if (!updatedNilai) return utilMessage(res, 400, 'Nilai gagal diunggah')
-      }
-        return utilData(res, 200, response.data)
-    })
-    .catch((error) => {
-    return utilError(res, error)
-    })
+    // axios(config)
+    //   .then((response) => {
+    //     for (let i = 0; i < hasil.length; i++) {
+    //       const updatedNilai = Nilai.update({ nilai: response.data }, { where: { username, mata_pelajaran } })
+    //       if (!updatedNilai) return utilMessage(res, 400, 'Nilai gagal diunggah')
+    //       }
+    //         return utilData(res, 200, response.data)
+    //   })
+    //   .catch((error) => {
+    //   return utilError(res, error)
+    //   })
+    // axios.post('https://api-model-sentences-t7eb73gi3q-et.a.run.app/', res.json(hasil))
+    // .then((response) => {
+    //   for (let i = 0; i < response.length; i++) {
+    //   const updatedNilai = Nilai.save({ nilai: data.nilai }, { where: { username, mata_pelajaran: mata_pelajaran } })
+    //   if (!updatedNilai) return utilMessage(res, 400, 'Nilai gagal diunggah')
+    //   }
+    //     return utilData(res, 200, response.data)
+    // })
+    // .catch((error) => {
+    // return utilError(res, error)
+    // })
   }catch (error) {
         return utilError(res, error)
     }}

@@ -111,8 +111,6 @@ export const showTertinggi = async(req, res) => {
     }
     
     export const showHistory = async(req, res) => {
-        //mengambil 3 nilai terbaru dari matpel berdasarkan username
-        //budi matpel bindo 70,85,78, mat ..., bio... , dll
         try {
             const {
             username

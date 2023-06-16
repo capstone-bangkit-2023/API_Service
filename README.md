@@ -32,4 +32,5 @@ git clone https://github.com/capstone-bangkit-2023/API_Service.git
 For Reset Password, Enter your email and app-password in .env with this configuration:
   
 NODEMAILER = {ENTER YOUR EMAIL}
+  <br/>
 NODEMAILER_PASS = {ENTER YOUR EMAIL APP-PASSWORD}

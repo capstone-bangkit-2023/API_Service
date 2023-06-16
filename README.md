@@ -23,11 +23,20 @@ https://docs.google.com/document/d/111WUYr6W-JranLW7XzRj0Vhxbm0PTrXQd-cgmBWAN9Q/
 3. Dockerfile
 4. Cloud Build (YAML File)
 
-# Clone the repository: 
+# Deploy With Cloud Run
+Clone the repository: 
 ```
 git clone https://github.com/capstone-bangkit-2023/API_Service.git
 ```
-
+Build image:
+```
+gcloud builds submit --tag gcr.io/$DEVSHELL_PROJECT_ID/api-service:0.1
+```
+Deploy on Cloud Run:
+```
+gcloud run deploy --image gcr.io/$DEVSHELL_PROJECT_ID/api-service:0.1
+```
+  
 # Environment Setting
 For Reset Password, Enter your email and app-password in .env with this configuration:
   

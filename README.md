@@ -12,13 +12,18 @@
 # LoginRegisterAPI
 API Service there 2 functions, such as bridge mobile app with API Model and bridge mobile app with database. To specific it, mobile app will send request to login, register, serve question, serve point, etc. Then API will retrieve data from database.
 
+# API Documentation
+```
+https://docs.google.com/document/d/111WUYr6W-JranLW7XzRj0Vhxbm0PTrXQd-cgmBWAN9Q/edit?usp=sharing
+```
+  
 # Build With
 1. Node JS
 2. Express JS
 3. Dockerfile
 4. Cloud Build (YAML File)
 
-Clone the repository: 
+# Clone the repository: 
 ```
 git clone https://github.com/capstone-bangkit-2023/API_Service.git
 ```
